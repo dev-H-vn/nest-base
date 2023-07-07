@@ -1,17 +1,22 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { RegisterDto } from 'src/auth/dto/auth.dto';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { AuthService } from 'src/auth/auth.service';
+import { LoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
 
 @Controller('auth')
 export class AuthController {
-  @Post()
-  register(@Body() body: RegisterDto) {
-    console.log(body);
-    return 'This action adds a new cat';
+  constructor(private authService: AuthService) {}
+  @Get()
+  checkConnect() {
+    console.log('--------------------------------');
   }
 
-  @Post()
-  login(@Body() body) {
-    console.log(body);
-    return 'This action adds a new cat';
+  @Post('register')
+  async register(@Body() body: RegisterDto) {
+    return await this.authService.register(body);
+  }
+
+  @Post('login')
+  async login(@Body() body: LoginDto) {
+    return await this.authService.login(body);
   }
 }
