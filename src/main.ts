@@ -3,8 +3,10 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from 'src/prisma/exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
+  const configService = new ConfigService();
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
@@ -25,6 +27,6 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  await app.listen(3002);
+  await app.listen(configService.get('PORT') || 5000);
 }
 bootstrap();
