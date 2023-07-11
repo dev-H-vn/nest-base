@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           node-version: 18
           branch: 'master'
