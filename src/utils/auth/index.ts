@@ -6,18 +6,16 @@ export const signJwtToken = async (
   email: string,
   jwtService: JwtService,
   configService: ConfigService,
-): Promise<{ accessToken: string; statusCode: number; message: string }> => {
+): Promise<{ accessToken: string }> => {
   const payload = {
     sub: userId,
     email,
   };
   const jwtString = await jwtService.signAsync(payload, {
-    expiresIn: '10m',
+    expiresIn: '30m',
     secret: configService.get('JWT_SECRET'),
   });
   return {
-    statusCode: 200,
-    message: 'Login successful',
     accessToken: jwtString,
   };
 };
