@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AppController } from 'src/app.controller';
 import { AuthModule } from 'src/auth/auth.module';
 import { NoteModule } from 'src/note/note.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
@@ -18,6 +19,7 @@ import { ResponseInterceptor } from 'src/utils';
     NoteModule,
     PrismaModule,
   ],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
