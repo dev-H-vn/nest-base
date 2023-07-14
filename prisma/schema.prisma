@@ -6,25 +6,33 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 //modify Database Scheme
 model User {
-  id             String @id @default(uuid()) @unique
+  id             String   @id @unique @default(uuid())
   email          String   @unique
-  hashedPassword String
-  firstName      String?  //can be null(optional)
+  hashedPassword String   @default("")
+  userName       String   @default("")
+  firstName      String? //can be null(optional)
   lastName       String?
+  avatar         String?
+  bio            String?
+  visitedBy      String?
+  showContact    Boolean  @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   //relationship
   notes          Note[]
+
   @@map("users") //users id "table's name" in Postgres SQL
 }
+
 //One user can "write" Many notes
 model Note {
-  id          String @id @default(uuid())  @unique
+  id          String   @id @unique @default(uuid())
   title       String
   description String
   url         String
@@ -33,6 +41,7 @@ model Note {
   updatedAt   DateTime @updatedAt
   //relationship
   userId      String //like "foreign key"
-  user User @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+
   @@map("notes")
 }
