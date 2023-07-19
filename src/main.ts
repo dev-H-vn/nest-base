@@ -25,8 +25,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  const port = 3002;
-  console.log('port is', port, parseInt(`${process.env.PORT}`));
+  const port = parseInt(`${process.env.PORT}`) || 3002;
   await app.listen(port);
 }
 bootstrap();

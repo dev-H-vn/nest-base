@@ -32,7 +32,7 @@ export class AuthService {
     }
     const isMatch = await bcrypt.compare(password, user.hashedPassword);
     if (!isMatch) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid Unauthorized');
     }
     return await signJwtToken(
       user.id,

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpCode,
   HttpStatus,
   Post,
@@ -22,8 +23,8 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
+  // @Header('Cache-Control', 'none')
   async register(@Body() body: RegisterDto) {
-    console.log(body);
     return await this.authService.register(body);
   }
 

@@ -8,12 +8,10 @@ import { match } from 'ts-pattern';
 @Catch(Prisma.PrismaClientKnownRequestError)
 export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+    console.log('exception--------------', { exception });
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const message = exception.message.replace(/\n/g, '');
-
-    console.log('exception--------------', { exception, message });
-
     return match(exception.code)
       .with('P2002', () => {
         const targetMsgs = (exception.meta.target as any).map((field: any) => ({
